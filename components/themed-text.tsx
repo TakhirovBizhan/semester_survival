@@ -1,10 +1,12 @@
-import { StyleSheet, Text, type TextProps } from 'react-native';
+// Обёртка над <Text>, которая автоматически подбирает цвет текста
+// в зависимости от темы и позволяет использовать предустановленные стили (title, link и т.д.)
 
 import { useThemeColor } from '@/hooks/use-theme-color';
+import { StyleSheet, Text, type TextProps } from 'react-native';
 
 export type ThemedTextProps = TextProps & {
-  lightColor?: string;
-  darkColor?: string;
+  lightColor?: string; // цвет для светлой темы
+  darkColor?: string;  // цвет для тёмной темы
   type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
@@ -33,6 +35,7 @@ export function ThemedText({
   );
 }
 
+// Предустановленные стили текста
 const styles = StyleSheet.create({
   default: {
     fontSize: 16,
@@ -55,6 +58,6 @@ const styles = StyleSheet.create({
   link: {
     lineHeight: 30,
     fontSize: 16,
-    color: '#0a7ea4',
+    color: '#0a7ea4', // синий цвет ссылки
   },
 });

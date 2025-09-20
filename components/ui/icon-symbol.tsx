@@ -1,17 +1,39 @@
-// Fallback for using MaterialIcons on Android and web.
+/**
+ * ui/icon-symbol.tsx
+ *
+ * Fallback-реализация иконок для платформ, где SF Symbols недоступны
+ * (Android, Web). Использует Material Icons из @expo/vector-icons.
+ *
+ * Важно: названия SF Symbols и MaterialIcons не совпадают — поэтому нужен MAPPING.
+ * MAPPING содержит сопоставления имен SF -> MaterialIconName.
+ *
+ * Рекомендации:
+ *  - При добавлении новой SF-иконки в проект — добавляй сопоставление в MAPPING.
+ *  - Если для конкретного SF нет аналогичной MaterialIcon, можно:
+ *    - подобрать похожую,
+ *    - загрузить SVG и использовать его напрямую,
+ *    - либо хранить платформо-специфические иконки.
+ */
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
+import { SymbolViewProps, SymbolWeight } from 'expo-symbols';
 import { ComponentProps } from 'react';
 import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
 
+// Тип мэппинга: ключ — имя SF Symbol, значение — имя MaterialIcons
 type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
+
+// Автоматически выводим допустимые имена через keyof typeof MAPPING
 type IconSymbolName = keyof typeof MAPPING;
 
 /**
- * Add your SF Symbols to Material Icons mappings here.
- * - see Material Icons in the [Icons Directory](https://icons.expo.fyi).
- * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
+ * Здесь перечислены сопоставления популярных SF Symbols -> Material Icons.
+ * Если нужно добавить новую иконку — допиши сюда.
+ *
+ * Пример: 'house.fill' (SF) => 'home' (Material)
+ *
+ * Замечание: некоторые SF имеют сложные названия/вариации, для них может не быть точного аналога.
+ * В таких случаях выбирай наиболее похожую по смыслу.
  */
 const MAPPING = {
   'house.fill': 'home',
@@ -21,9 +43,14 @@ const MAPPING = {
 } as IconMapping;
 
 /**
- * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
- * This ensures a consistent look across platforms, and optimal resource usage.
- * Icon `name`s are based on SF Symbols and require manual mapping to Material Icons.
+ * Компонент-иконка для платформ, где SF Symbols недоступны.
+ *
+ * Пропсы:
+ *  - name: ключ из MAPPING (строго типизированный).
+ *  - size: число — размер иконки.
+ *  - color: цвет (может быть OpaqueColorValue для платформенных цветов).
+ *  - style: стиль контейнера/текста.
+ *  - weight: принимается для совместимости, но MaterialIcons не использует этот параметр.
  */
 export function IconSymbol({
   name,
@@ -37,5 +64,7 @@ export function IconSymbol({
   style?: StyleProp<TextStyle>;
   weight?: SymbolWeight;
 }) {
+  // Берём соответствие из MAPPING и рендерим MaterialIcons.
+  // Если MAPPING[name] отсутствует, компилятор не даст этого случиться (типизация).
   return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
 }

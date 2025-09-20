@@ -1,3 +1,6 @@
+// Компонент с эффектом параллакса при скролле.
+// Шапка (header) двигается и увеличивается при прокрутке вниз.
+
 import type { PropsWithChildren, ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, {
@@ -14,8 +17,8 @@ import { useThemeColor } from '@/hooks/use-theme-color';
 const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
-  headerImage: ReactElement;
-  headerBackgroundColor: { dark: string; light: string };
+  headerImage: ReactElement; // картинка/элемент в шапке
+  headerBackgroundColor: { dark: string; light: string }; // цвет подложки в шапке
 }>;
 
 export default function ParallaxScrollView({
@@ -25,12 +28,17 @@ export default function ParallaxScrollView({
 }: Props) {
   const backgroundColor = useThemeColor({}, 'background');
   const colorScheme = useColorScheme() ?? 'light';
+
+  // Слежение за скроллом
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollOffset(scrollRef);
+
+  // Анимация для шапки
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
+          // Сдвиг по Y (эффект параллакса)
           translateY: interpolate(
             scrollOffset.value,
             [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
@@ -38,6 +46,7 @@ export default function ParallaxScrollView({
           ),
         },
         {
+          // Увеличение при скролле вниз
           scale: interpolate(scrollOffset.value, [-HEADER_HEIGHT, 0, HEADER_HEIGHT], [2, 1, 1]),
         },
       ],
@@ -49,6 +58,7 @@ export default function ParallaxScrollView({
       ref={scrollRef}
       style={{ backgroundColor, flex: 1 }}
       scrollEventThrottle={16}>
+      {/* Шапка */}
       <Animated.View
         style={[
           styles.header,
@@ -57,15 +67,14 @@ export default function ParallaxScrollView({
         ]}>
         {headerImage}
       </Animated.View>
+
+      {/* Контент */}
       <ThemedView style={styles.content}>{children}</ThemedView>
     </Animated.ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
     height: HEADER_HEIGHT,
     overflow: 'hidden',
