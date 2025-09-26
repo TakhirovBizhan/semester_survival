@@ -1,3 +1,4 @@
+import { primaryTextColor } from "@/app/config/Colors";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -37,13 +38,13 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   title: {
-    color: "#fff",
+    color: primaryTextColor,
     fontFamily: "monospace",
     fontSize: 16,
     marginBottom: 4,
   },
   barBackground: {
-    width: "100%",
+    width: 100,
     height: 20,
     borderWidth: 2,
     borderColor: "#fff",
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   value: {
-    color: "#fff",
+    color: primaryTextColor,
     fontFamily: "monospace",
     fontSize: 14,
     marginTop: 2,

@@ -1,3 +1,4 @@
+import { primaryTextColor } from "@/app/config/Colors";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
       alignSelf: "stretch",                // растянуть по ширине контейнера
     },
     dialogText: {
-      color: "#fff",              // белый текст
+      color: primaryTextColor,              // белый текст
       fontSize: 20,               // чуть крупнее для читаемости
       fontFamily: "monospace",    // пиксельный эффект
       lineHeight: 26,             // высота строки для воздуха

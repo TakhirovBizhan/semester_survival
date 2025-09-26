@@ -1,16 +1,15 @@
+import { accentColor } from "@/app/config/Colors";
 import React, { ReactNode } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-type MenuProps = {
-  title?: string;      // заголовок меню
+type MenuProps = {     
   children: ReactNode; // любой контент внутри меню
 };
 
-export const Menu: React.FC<MenuProps> = ({ title = "Menu", children }) => {
+export const Menu: React.FC<MenuProps> = ({ children }) => {
   return (
     <View style={styles.overlay}>
       <View style={styles.menuBox}>
-        <Text style={styles.title}>{title}</Text>
         <View style={styles.content}>{children}</View>
       </View>
     </View>
@@ -24,24 +23,13 @@ const styles = StyleSheet.create({
     alignItems: "center",               // центрируем по горизонтали
   },
   menuBox: {
-    backgroundColor: "rgba(0,0,0,0.9)", // фон меню
-    borderWidth: 4,
-    borderColor: "#fff",                // белая рамка
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // фон меню
     paddingVertical: 24,
     paddingHorizontal: 32,
-    borderRadius: 0,                    // пиксельный стиль
-    width: "80%",                       // ширина меню
+    borderWidth: 5,
+    borderBlockColor: accentColor,
+    borderRadius: 0,                    // пиксельный стиль           
     alignItems: "center",
-  },
-  title: {
-    fontSize: 28,
-    color: "#fff",
-    fontFamily: "monospace",
-    marginBottom: 20,
-    textTransform: "uppercase",
-    textShadowColor: "#000",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 0,
   },
   content: {
     width: "100%",       // контент тянется по ширине

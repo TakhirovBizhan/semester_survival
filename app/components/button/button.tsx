@@ -1,3 +1,4 @@
+import { primaryTextColor, secondaryColor } from "@/app/config/Colors";
 import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
@@ -36,15 +37,16 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#2d2d2d", // фон
     borderWidth: 4,             // толщина границы
-    borderColor: "#000",        // цвет границы
+    borderBlockColor: secondaryColor,       // цвет границы
     paddingVertical: 10,        // внутренние отступы по вертикали
     paddingHorizontal: 16,      // внутренние отступы по горизонтали
     alignItems: "center",       // выравнивание по горизонтали
     justifyContent: "center",   // выравнивание по вертикали
     borderRadius: 0,            // углы без скругления (пиксельный стиль)
+    marginBlock: 10,
   },
   text: {
-    color: "#fff",             // белый цвет текста
+    color: primaryTextColor,             // белый цвет текста
     fontSize: 16,              // размер шрифта
     fontWeight: "bold",        // жирный
     fontFamily: "monospace",   // моноширинный шрифт (эффект пиксельного)

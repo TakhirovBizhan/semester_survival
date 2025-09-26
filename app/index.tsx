@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { Text, View } from "react-native";
 import { Button } from './components/button/button';
 import { Menu } from "./components/menu/menu";
+import { baseColor } from "./config/Colors";
 
 export default function Index() {
   return (
@@ -10,6 +11,7 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: baseColor,
       }}
     >
       <Text>Тут будет основное меню, которое появляется при запуске игры</Text>
@@ -22,3 +24,4 @@ export default function Index() {
     </View>
   );
 }
+
