@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
-import { Button } from './components/button/button';
-import { Menu } from "./components/menu/menu";
+import { Button } from './components/button';
+import { Menu } from "./components/menu";
 import { baseColor } from "./config/Colors";
 
 export default function Index() {
