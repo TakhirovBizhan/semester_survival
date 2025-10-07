@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Pressable, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 
 type ModalWindowProps = {
   visible: boolean;
@@ -9,10 +9,15 @@ type ModalWindowProps = {
 
 export const ModalWindow: React.FC<ModalWindowProps> = ({ visible, onClose, children }) => {
   return (
-    <Modal transparent visible={visible} animationType="fade">
-      <Pressable style={styles.overlay} onPress={onClose}>
+    <Modal
+      transparent
+      visible={visible}
+      animationType="fade"
+      onRequestClose={onClose} // для Android кнопки "назад"
+    >
+      <View style={styles.overlay}>
         <View style={styles.box}>{children}</View>
-      </Pressable>
+      </View>
     </Modal>
   );
 };
