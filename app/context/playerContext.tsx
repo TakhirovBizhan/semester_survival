@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { PlayerData, defaultPlayerData, loadPlayerData, savePlayerData } from "../storage/userStorage";
 
-type ModalType = "none" | "name" | "firstChoice" | "labChoice";
+type ModalType = "none" | "name" | "firstChoice" | "labChoice" | "intelligence" | "charisma";
 
 type PlayerContextType = {
   player: PlayerData;

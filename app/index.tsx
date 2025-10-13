@@ -16,7 +16,7 @@ export default function Index() {
     >
       <Text>Тут будет основное меню, которое появляется при запуске игры</Text>
       <Menu>
-      <Link href="../game"><Button title={"Play"}/></Link>
+      <Link href="../day1"><Button title={"Play"}/></Link>
       <Link href="../settings"><Button title={"settings"}/></Link>
       <Link href="../statistic"><Button title={"stats"}/></Link>
       <Button title="Exit" disabled />
