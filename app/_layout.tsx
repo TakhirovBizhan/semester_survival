@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
+import { PlayerProvider } from "./context/playerContext";
 
 export default function RootLayout() {
-  return <Stack />;
+  return <PlayerProvider><Stack /></PlayerProvider>;
 }
