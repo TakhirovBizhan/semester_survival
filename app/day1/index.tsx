@@ -1,9 +1,8 @@
 import { Text, View } from "react-native";
+import { Button } from "../components/button";
 import { Dialog } from "../components/dialog";
 import { ModalWindow } from "../components/modalWindow";
 import ProgressBar from "../components/progressBar";
-
-import { Button } from "../components/button";
 import { usePlayer } from "../context/playerContext";
 import { useHandleBeer } from "../Hooks/HandleBeer";
 import { useHandleLabChoice } from "../Hooks/HandleChoice";
