@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface PlayerData {
+  currentDay: number;
   name: string;
   happiness: number;
   academic: number;
@@ -50,6 +51,7 @@ export async function clearPlayerData(): Promise<void> {
 /** создать игрока по умолчанию */
 export function defaultPlayerData(): PlayerData {
   return {
+    currentDay: 1,
     name: "",
     happiness: 50,
     academic: 50,

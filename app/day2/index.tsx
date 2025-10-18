@@ -7,10 +7,9 @@ import { FirstChoiceModal } from "../UI/FirstChoiceModal";
 import { IntelligenceModal } from "../UI/IntelligenceModal";
 import { LabChoiceModal } from "../UI/LabChoiceModal";
 import { ProgressSection } from "../UI/ProgressSection";
-import { ChooseNameModal } from "./components/ChooseNameModal";
 import { useDialogs } from "./components/dialogs";
 
-export default function Day1() {
+export default function Day2() {
   const { isTypingDone, setIsTypingDone, index, setIndex, setModalType } = usePlayer();
   const dialogs = useDialogs();
   const currentDialog = dialogs[index];
@@ -49,7 +48,6 @@ export default function Day1() {
       )}
 
       {/* 👤 Модалки */}
-      <ChooseNameModal />
       <FirstChoiceModal />
       <LabChoiceModal />
       <IntelligenceModal />

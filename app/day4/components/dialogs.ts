@@ -4,14 +4,11 @@ export const useDialogs = () => {
   const { player, setModalType } = usePlayer();
 
   const dialogs = [
-    { text: "День 1" },
+    { text: "День 4" },
     { text: "МММ? Что за странный звук? И вообще где я?" },
     { text: "Наверное более важный вопрос, кто я?" },
     {
       text: "Да... Этот вопрос гораздо важнее, а ведь меня назвали в честь деда, эх как же его звали?",
-    },
-    {
-      action: () => setModalType("name"),
     },
     {
       text: player.name ? `Да точно же! Его звали ${player.name}` : "",
