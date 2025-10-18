@@ -20,8 +20,9 @@ const charismaTasks = [
 ];
 
 export const CharismaModal = () => {
-  const { modalType, setModalType, player, updatePlayer } = usePlayer();
+  const { modalType, setModalType, player, updatePlayer, setIndex, index } = usePlayer();
   const [selected, setSelected] = useState<string | null>(null);
+  const [resultText, setResultText] = useState<string | null>(null);
 
   if (modalType !== "charisma") return null;
 
@@ -29,6 +30,7 @@ export const CharismaModal = () => {
   const correctAnswer = task.options[Math.floor(Math.random() * task.options.length)];
 
   const handleAnswer = (answer: string) => {
+    if (selected) return; // блокируем повторные клики
     const isCorrect = answer === correctAnswer;
     const delta = isCorrect ? 10 : -20;
 
@@ -38,22 +40,36 @@ export const CharismaModal = () => {
     });
 
     setSelected(answer);
-    setTimeout(() => setModalType("none"), 800);
+    setResultText(
+      isCorrect
+        ? "😎 Отличный выбор! +10 к счастью и учёбе"
+        : "😬 Неудачно! -20 к счастью и учёбе"
+    );
+
+    setTimeout(() => {
+      setModalType("none");
+      setIndex(index + 1);
+    }, 1200);
   };
 
   return (
-    <ModalWindow visible={modalType === "charisma"} onClose={() => setModalType("none")}>
-      <Text style={{ color: "white", fontSize: 18, marginBottom: 10 }}>{task.question}</Text>
-
-      {task.options.map((opt) => (
-        <View key={opt} style={{ marginVertical: 4 }}>
-          <Button
-            title={opt}
-            onPress={() => handleAnswer(opt)}
-            color={selected === opt ? "#666" : "#333"}
-          />
-        </View>
-      ))}
+    <ModalWindow visible onClose={() => setModalType("none")}>
+      {!resultText ? (
+        <>
+          <Text style={{ color: "white", fontSize: 18, marginBottom: 10 }}>{task.question}</Text>
+          {task.options.map((opt) => (
+            <View key={opt} style={{ marginVertical: 4 }}>
+              <Button
+                title={opt}
+                onPress={() => handleAnswer(opt)}
+                color={selected === opt ? "#666" : "#333"}
+              />
+            </View>
+          ))}
+        </>
+      ) : (
+        <Text style={{ color: "white", fontSize: 18, textAlign: "center" }}>{resultText}</Text>
+      )}
     </ModalWindow>
   );
 };
