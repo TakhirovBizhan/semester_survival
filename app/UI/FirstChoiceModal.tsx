@@ -7,18 +7,23 @@ import { useHandleBeer } from "../Hooks/HandleBeer";
 import { useHandleStudy } from "../Hooks/HandleStudy";
 
 export const FirstChoiceModal = () => {
-  const { modalType, setModalType } = usePlayer();
+  const { modalType, setModalType, setDay1Choice } = usePlayer();
   const handleBeer = useHandleBeer();
   const handleStudy = useHandleStudy();
+
   const [result, setResult] = useState<string | null>(null);
 
   if (modalType !== "firstChoice") return null;
 
+  // -----------------------
+  // ВАЖНО: handleAction ДОЛЖНА быть выше onPress
+  // -----------------------
   const handleAction = (fn: () => void, message: string) => {
-    setResult(message); // показываем результат
-    // Закрываем окно только через 1.5 сек
+    setResult(message);
+
     setTimeout(() => {
-        fn(); // обновляем игрока
+      fn();
+      setModalType("none");
     }, 1500);
   };
 
@@ -37,23 +42,29 @@ export const FirstChoiceModal = () => {
           >
             Куда пойдёшь?
           </Text>
+
+          {/* 🍺 CHOICE 1 */}
           <Button
             title="Пойти за пивом 🍺"
-            onPress={() =>
+            onPress={() => {
+              setDay1Choice("choice1");
               handleAction(
                 handleBeer,
                 "🍺 Настроение улучшилось, учёба немного просела!"
-              )
-            }
+              );
+            }}
           />
+
+          {/* 🎓 CHOICE 2 */}
           <Button
             title="Пойти на учёбу 🎓"
-            onPress={() =>
+            onPress={() => {
+              setDay1Choice("choice2");
               handleAction(
                 handleStudy,
                 "🎓 Учёба выросла, настроение немного понизилось!"
-              )
-            }
+              );
+            }}
           />
         </View>
       ) : (

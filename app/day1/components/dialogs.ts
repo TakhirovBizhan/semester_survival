@@ -12,7 +12,7 @@ export const day1ChoiceBackgrounds = {
 };
 
 // 🎵 МУЗЫКА ДНЯ 1
-export const day1Music = require("../../../assets/music/day1.mp3");
+// export const day1Music = require("../../../assets/music/day1.mp3");
 
 // 📜 ДИАЛОГИ ДНЯ 1
 export const useDialogs = () => {
