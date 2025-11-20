@@ -6,6 +6,8 @@ import { baseColor } from "./config/Colors";
 import { usePlayer } from "./context/playerContext";
 import { SettingsModal } from "./UI/SettingsModal";
 
+
+
 export default function Index() {
   const { player, modalType, setModalType } = usePlayer();
 

@@ -23,12 +23,6 @@ export default function Day1() {
   const dialogs = useDialogs();
   const currentDialog = dialogs[index];
 
-  // const background = useMemo(() => {
-  //   if (day1Choice === "choice1") return day1ChoiceBackgrounds.choice1;
-  //   if (day1Choice === "choice2") return day1ChoiceBackgrounds.choice2;
-  //   return day1Backgrounds[0];
-  // }, [day1Choice]);
-
   useEffect(() => {
     console.log("[Day1] render -> index:", index, "day1Choice:", day1Choice);
   }, [index, day1Choice]);
