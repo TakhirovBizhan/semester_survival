@@ -32,28 +32,36 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
     setDay1ChoiceState(choice);
   };
 
+
   const updatePlayer = async (changes: Partial<PlayerData>) => {
-    setPlayer((prev) => {
-      const updated = { ...prev, ...changes };
-      savePlayerData(updated);
-      return updated;
-    });
+    setPlayer((prev) => ({ ...prev, ...changes }));
   };
 
-  useEffect(() => {
-    loadPlayerData().then((stored) => {
-      if (stored) {
-        setPlayer({
-          ...defaultPlayerData(),
-          ...stored,
-          choices: {
-            ...defaultPlayerData().choices,
-            ...stored.choices,
-          },
-        });
-      }
-    });
-  }, []);
+
+  // const updatePlayer = async (changes: Partial<PlayerData>) => {
+  //   setPlayer((prev) => {
+  //     const updated = { ...prev, ...changes };
+  //     savePlayerData(updated);
+  //     return updated;
+  //   });
+  // };
+
+
+
+  // useEffect(() => {
+  //   loadPlayerData().then((stored) => {
+  //     if (stored) {
+  //       setPlayer({
+  //         ...defaultPlayerData(),
+  //         ...stored,
+  //         choices: {
+  //           ...defaultPlayerData().choices,
+  //           ...stored.choices,
+  //         },
+  //       });
+  //     }
+  //   });
+  // }, []);
 
   return (
     <PlayerContext.Provider

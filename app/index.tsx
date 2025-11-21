@@ -5,11 +5,15 @@ import { Menu } from "./components/menu";
 import { baseColor } from "./config/Colors";
 import { usePlayer } from "./context/playerContext";
 import { SettingsModal } from "./UI/SettingsModal";
+import { useState } from "react";
+
 
 
 
 export default function Index() {
-  const { player, modalType, setModalType } = usePlayer();
+  const { player, setModalType } = usePlayer();
+  const [volume, setVolume] = useState(1);
+
 
   return (
     <View style={[styles.container, { backgroundColor: baseColor }]}>
@@ -18,7 +22,8 @@ export default function Index() {
       </Text>
 
       <Menu>
-        <Link href={`../day${player.currentDay}`}>
+        
+        <Link href={`../day${Math.max(1, player.currentDay)}`}>
           <Button title={"Play"} />
         </Link>
         <Button title="Settings ⚙️" onPress={() => setModalType("settings")} />
@@ -29,7 +34,8 @@ export default function Index() {
       </Menu>
 
       {/* Модальное окно настроек */}
-      <SettingsModal />
+      <SettingsModal volume={volume} setVolume={setVolume} />
+
     </View>
   );
 }
