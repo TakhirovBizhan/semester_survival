@@ -28,7 +28,10 @@ export const FirstChoiceModal = () => {
   };
 
   return (
-    <ModalWindow visible onClose={() => setModalType("none")}>
+<ModalWindow 
+      visible 
+      onClose={() => { /* пустая функция, закрытие через крестик запрещено */ }}
+    >
       {!result ? (
         <View>
           <Text

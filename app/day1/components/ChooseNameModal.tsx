@@ -17,7 +17,10 @@ export const ChooseNameModal = () => {
   };
 
   return (
-    <ModalWindow visible={modalType === "name"} onClose={() => setModalType("none")}>
+    <ModalWindow 
+      visible={modalType === "name"} 
+      onClose={() => { /* пустая функция, закрыть нельзя */ }}
+    >
       <Text
         style={{
           color: "white",

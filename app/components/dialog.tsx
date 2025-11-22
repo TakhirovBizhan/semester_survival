@@ -51,9 +51,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   box: {
-    backgroundColor: "rgba(0,0,0,0.8)",
-    borderWidth: 4,
-    borderColor: "#fff",
+    backgroundColor: "rgba(0, 0, 0, 0.42)",
+    // borderWidth: 4,
+    // borderColor: "#fff",
     paddingVertical: 20,
     paddingHorizontal: 24,
     borderRadius: 0,

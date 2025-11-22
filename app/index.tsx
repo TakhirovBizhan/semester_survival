@@ -1,14 +1,16 @@
 import { Link } from "expo-router";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, StyleSheet, ImageBackground} from "react-native";
 import { Button } from './components/button';
 import { Menu } from "./components/menu";
-import { baseColor } from "./config/Colors";
+// import { baseColor } from "./config/Colors";
 import { usePlayer } from "./context/playerContext";
 import { SettingsModal } from "./UI/SettingsModal";
 import { useState } from "react";
 
 
 
+// путь к картинке фона
+const backgroundImage = require("../assets/bg/main.png");
 
 export default function Index() {
   const { player, setModalType } = usePlayer();
@@ -16,40 +18,55 @@ export default function Index() {
 
 
   return (
-    <View style={[styles.container, { backgroundColor: baseColor }]}>
-      <Text style={styles.title}>
+    // <View style={[styles.container, { backgroundColor: baseColor }]}>
+    <ImageBackground
+      source={backgroundImage}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      
+      {/* <Text style={styles.title}>
         Тут будет основное меню, которое появляется при запуске игры
-      </Text>
+      </Text> */}
 
       <Menu>
         
         <Link href={`../day${Math.max(1, player.currentDay)}`}>
-          <Button title={"Play"} />
+          <Button title={"Играть"} />
         </Link>
-        <Button title="Settings ⚙️" onPress={() => setModalType("settings")} />
+        <Button title="Настройки" onPress={() => setModalType("settings")} />
         <Link href="../statistic">
-          <Button title={"Stats"} />
+          <Button title={"Статистика"} />
         </Link>
-        <Button title="Exit" disabled />
+        <Button title="Выход" />
       </Menu>
 
       {/* Модальное окно настроек */}
       <SettingsModal volume={volume} setVolume={setVolume} />
-
-    </View>
+      
+    </ImageBackground>
+    // </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  blur: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 16,
+    backgroundColor: "transparent",
   },
   title: {
     marginBottom: 20,
     color: "white",
     textAlign: "center",
     fontSize: 16,
+    fontFamily: "monospace",
   },
 });
