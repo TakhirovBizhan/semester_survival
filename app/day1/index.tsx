@@ -109,7 +109,7 @@ useEffect(() => {
         }}
       >
         <Button
-    title="⏸️"   // значок паузы
+    title="||"   // значок паузы
     onPress={() => setModalType("settings")}
     square={true} // добавим новый проп для квадратной кнопки
   />

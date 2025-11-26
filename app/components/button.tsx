@@ -7,6 +7,7 @@ type ButtonProps = {
   onPress?: () => void;
   disabled?: boolean;
   square?: boolean; // новый проп
+  variant?: "pause"; // новый кастомный стиль
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -14,6 +15,7 @@ export const Button: React.FC<ButtonProps> = ({
   onPress,
   disabled = false,
   square = false,
+  variant,
 }) => {
   return (
     <Pressable
@@ -26,8 +28,14 @@ export const Button: React.FC<ButtonProps> = ({
         pressed && styles.pressed,
       ]}
     >
-      <View style={styles.inner}>
-        <Text style={[styles.text, disabled && styles.textDisabled]} numberOfLines={1}>
+      <View style={[styles.inner, variant === "pause" && styles.pauseInner]}>
+        <Text
+          style={[
+            styles.text,
+            variant === "pause" && styles.pauseText,
+            disabled && styles.textDisabled,
+          ]}
+        >
           {title}
         </Text>
       </View>
@@ -52,11 +60,32 @@ const styles = StyleSheet.create({
   },
 
   squareButton: {
-    width: 0,   // фиксированная ширина
-    height: 0,  // фиксированная высота
-    padding: 0,  // убираем внутренние отступы
-    borderRadius: 6, // чуть закругляем уголки
-    right: 20,
+    width: 45,
+    height: 45,
+    padding: 0,
+    // borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  // Кастомный стиль "паузной" кнопки
+  pauseButton: {
+    backgroundColor: "#000",      // чёрный фон
+    borderWidth: 2,
+    borderColor: "#fff",          // белая рамка
+    shadowOffset: { width: 2, height: 2 },
+    width: 45,
+    height: 45,
+  },
+
+  pauseInner: {
+    padding: 0,
+  },
+
+  pauseText: {
+    color: "#fff",
+    fontSize: 26,
+    textShadowColor: "transparent",
   },
 
   pressed: {
