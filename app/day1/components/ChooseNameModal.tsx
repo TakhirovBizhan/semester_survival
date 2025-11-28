@@ -5,13 +5,17 @@ import { Text, TextInput } from "react-native";
 import { usePlayer } from "../../context/playerContext";
 
 export const ChooseNameModal = () => {
-  const { modalType, setModalType, player, updatePlayer, setIndex, setIsTypingDone } = usePlayer();
+  const { modalType, setModalType, player, updatePlayer, index, setIndex, setIsTypingDone } = usePlayer();
 
   const handleConfirmName = async () => {
     if (player.name.trim()) {
       await updatePlayer({ name: player.name });
+
       setModalType("none");
-      setIndex(prev => prev + 1);
+
+      //  Правильное обновление индекса
+      setIndex(index + 1);
+
       setIsTypingDone(false);
     }
   };
@@ -19,7 +23,7 @@ export const ChooseNameModal = () => {
   return (
     <ModalWindow 
       visible={modalType === "name"} 
-      onClose={() => { /* пустая функция, закрыть нельзя */ }}
+      onClose={() => { /* Модалку закрыть нельзя */ }}
     >
       <Text
         style={{
@@ -31,20 +35,25 @@ export const ChooseNameModal = () => {
       >
         Выбери себе имя
       </Text>
-      <TextInput
-        value={player.name}
-        onChangeText={(text) => updatePlayer({ name: text })}
-        placeholder="Введите имя"
-        placeholderTextColor="#999"
-        style={{
-          color: "white",
-          fontFamily: "monospace",
-          fontSize: 16,
-          marginBottom: 8,
-          borderBottomWidth: 1,
-          borderBottomColor: "white",
-        }}
-      />
+
+<TextInput
+  value={player.name}
+  onChangeText={(text) => updatePlayer({ name: text })}
+  placeholder="Введите имя"
+  placeholderTextColor="#999"
+  selectionColor="white"         // цвет выделения текста
+  underlineColorAndroid="transparent" // убираем нижнюю линию на Android
+  // caretColor="white"             // цвет курсора
+  style={{
+    color: "white",
+    fontFamily: "monospace",
+    fontSize: 16,
+    marginBottom: 8,
+    borderBottomWidth: 0,       // без рамки
+  }}
+/>
+
+
       <Button title="Подтвердить" onPress={handleConfirmName} />
     </ModalWindow>
   );
