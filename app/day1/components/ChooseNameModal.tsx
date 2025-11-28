@@ -45,11 +45,14 @@ export const ChooseNameModal = () => {
   underlineColorAndroid="transparent" // убираем нижнюю линию на Android
   // caretColor="white"             // цвет курсора
   style={{
+    outline: "none",
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 7,
     color: "white",
     fontFamily: "monospace",
     fontSize: 16,
     marginBottom: 8,
-    borderBottomWidth: 0,       // без рамки
   }}
 />
 
