@@ -5,6 +5,7 @@ import { Menu } from "./components/menu";
 // import { baseColor } from "./config/Colors";
 import { useEffect, useState } from "react";
 import { usePlayer } from "./context/playerContext";
+import { defaultPlayerData } from "./storage/userStorage";
 import { SettingsModal } from "./UI/SettingsModal";
 
 
@@ -13,7 +14,7 @@ import { SettingsModal } from "./UI/SettingsModal";
 const backgroundImage = require("../assets/bg/main.png");
 
 export default function Index() {
-  const { player, setModalType } = usePlayer();
+  const {  setModalType, updatePlayer } = usePlayer();
   const [volume, setVolume] = useState(1);
 
 
@@ -36,12 +37,13 @@ export default function Index() {
       resizeMode="cover"
     >
       <Menu>
-        <Link href={`../day${Math.max(1, player.currentDay)}`}>
-          <Button title={"Играть"} />
+        {/* тут потом динамически будет день по сохранению */}
+        <Link href={`../day1`}>
+          <Button title="Играть" onPress={() => updatePlayer(defaultPlayerData())} />
         </Link>
         <Button title="Настройки" onPress={() => setModalType("settings")} />
         <Link href="../statistic">
-          <Button title={"Статистика"} />
+          <Button title="Статистика" />
         </Link>
         <Button title="Выход" />
       </Menu>

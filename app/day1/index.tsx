@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, ImageBackground, Text, View } from "react-native";
+import { Dimensions, ImageBackground, Platform, Text, View } from "react-native";
 import { Button } from "../components/button";
 import { Dialog } from "../components/dialog";
 import { usePlayer } from "../context/playerContext";
@@ -25,11 +25,6 @@ export default function Day1() {
   const dialogs = useDialogs();
   const currentDialog = dialogs[index];
 
-  // Лог для контроля
-  useEffect(() => {
-    console.log("[Day1] render -> index:", index, "lastChoice:", player.lastChoice);
-  }, [index, player.lastChoice]);
-
   // =============================
   // МУЗЫКА
   // =============================
@@ -40,8 +35,14 @@ export default function Day1() {
     let isMounted = true;
     let music: Audio.Sound | null = null;
 
+    // если веб версия, то музыка не играет
     const loadMusic = async () => {
       try {
+        if (Platform.OS === "web") {
+          console.log("Музыка отключена на Web");
+          return;
+        }
+        
         const { sound } = await Audio.Sound.createAsync(
           require("../../assets/music/day1.mp3"),
           { shouldPlay: true, isLooping: true, volume }
@@ -58,11 +59,19 @@ export default function Day1() {
 
     return () => {
       isMounted = false;
+    
       if (music) {
-        music.stopAsync();
-        music.unloadAsync();
+        (async () => {
+          try {
+            await music.stopAsync();
+            await music.unloadAsync();
+          } catch (e) {
+            console.log("cleanup error:", e);
+          }
+        })();
       }
     };
+
   }, []);
 
   useEffect(() => {
