@@ -1,11 +1,11 @@
 import { Link } from "expo-router";
-import { Text, StyleSheet, ImageBackground} from "react-native";
+import { BackHandler, ImageBackground, Platform, StyleSheet } from "react-native";
 import { Button } from './components/button';
 import { Menu } from "./components/menu";
 // import { baseColor } from "./config/Colors";
+import { useEffect, useState } from "react";
 import { usePlayer } from "./context/playerContext";
 import { SettingsModal } from "./UI/SettingsModal";
-import { useState } from "react";
 
 
 
@@ -17,20 +17,25 @@ export default function Index() {
   const [volume, setVolume] = useState(1);
 
 
+  //Фича под андроид, открытые настроек при нажатии на кнопку назад
+  useEffect(() => {
+    if (Platform.OS !== "android") return;
+    const handler = BackHandler.addEventListener("hardwareBackPress", () => {
+      setModalType("settings");
+      return true; // блокируем выход из приложения
+    });
+
+    return () => handler.remove();
+  }, []);
+
+
   return (
-    // <View style={[styles.container, { backgroundColor: baseColor }]}>
     <ImageBackground
       source={backgroundImage}
       style={styles.background}
       resizeMode="cover"
     >
-      
-      {/* <Text style={styles.title}>
-        Тут будет основное меню, которое появляется при запуске игры
-      </Text> */}
-
       <Menu>
-        
         <Link href={`../day${Math.max(1, player.currentDay)}`}>
           <Button title={"Играть"} />
         </Link>
@@ -45,7 +50,6 @@ export default function Index() {
       <SettingsModal volume={volume} setVolume={setVolume} />
       
     </ImageBackground>
-    // </View>
   );
 }
 

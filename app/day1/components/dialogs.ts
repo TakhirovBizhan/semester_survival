@@ -1,9 +1,16 @@
 import { usePlayer } from "../../context/playerContext";
 
 export const day1ChoiceBackgrounds = {
-  morning: require("../../../assets/bg/day1/1.png"), // утро
-  beer: require("../../../assets/bg/day1/bar.png"),   // пиво
-  university: require("../../../assets/bg/day1/Uni.png"),   // учёба
+  morning: require("../../../assets/bg/morning.png"), // утро
+  beer: require("../../../assets/bg/bar.png"),   // пиво
+  university: require("../../../assets/bg/Uni.png"),   // учёба
+  charismaSuccess: require("../../../assets/bg/charisma_success.png"),
+  charismaFailed: require("../../../assets/bg/charisma_failed.png"),
+  intellectSuccess: require("../../../assets/bg/intellect_success.png"),
+  IntelectFailed: require("../../../assets/bg/intellect_failed.png"),
+  giveUp: require("../../../assets/bg/give_up_class.png"),
+  sleep: require("../../../assets/bg/sleep.png"),
+  inClass: require("../../../assets/bg/in_class.png")
 };
 
 export const useDialogs = () => {
@@ -40,8 +47,8 @@ export const useDialogs = () => {
   
       { text: "Пиво оказалось на удивление вкусным и холодным.", background: day1ChoiceBackgrounds.beer, },
       { text: "Ты почувствовал себя лучше, но и немного уставшим.", background: day1ChoiceBackgrounds.beer, },
-      { text: "Тяжёлый был денек...", background: day1ChoiceBackgrounds.beer,},
-      { text: "Всегда можно начать сначала...", background: day1ChoiceBackgrounds.beer, },
+      { text: "Тяжёлый был денек...", background: day1ChoiceBackgrounds.sleep,},
+      { text: "Всегда можно начать сначала...", background: day1ChoiceBackgrounds.sleep, },
     );
   }
   
@@ -52,10 +59,10 @@ export const useDialogs = () => {
         background: day1ChoiceBackgrounds.university,
       },
   
-      { text: "Преподаватель смотрит на тебя строго. Как ты поступишь?", background: day1ChoiceBackgrounds.university },
+      { text: "Преподаватель смотрит на тебя строго. Как ты поступишь?", background: day1ChoiceBackgrounds.inClass },
       { action: () => setModalType("labChoice"), background: day1ChoiceBackgrounds.university },
-      { text: "Тяжелый был денек...", background: day1ChoiceBackgrounds.university},
-      { text: "Всегда можно начать сначала...", background: day1ChoiceBackgrounds.university },
+      { text: "Тяжелый был денек...", background: day1ChoiceBackgrounds.sleep},
+      { text: "Всегда можно начать сначала...", background: day1ChoiceBackgrounds.sleep },
     );
   }
 
