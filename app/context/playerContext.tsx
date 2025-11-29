@@ -13,8 +13,6 @@ type PlayerContextType = {
   modalType: ModalType;
   setModalType: (type: ModalType) => void;
   updatePlayer: (changes: Partial<PlayerData>) => Promise<void>;
-  day1Choice: "choice1" | "choice2" | null;
-  setDay1Choice: (choice: "choice1" | "choice2") => void;
 };
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -25,43 +23,37 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   const [isTypingDone, setIsTypingDone] = useState(false);
   const [modalType, setModalType] = useState<ModalType>("none");
 
-  const [day1Choice, setDay1ChoiceState] = useState<"choice1" | "choice2" | null>(null);
 
-  const setDay1Choice = (choice: "choice1" | "choice2") => {
-    console.log("[PlayerContext] setDay1Choice ->", choice);
-    setDay1ChoiceState(choice);
-  };
-
-
-  const updatePlayer = async (changes: Partial<PlayerData>) => {
-    setPlayer((prev) => ({ ...prev, ...changes }));
-  };
-
-
+  // какая то непонятная затычка для игрока.
   // const updatePlayer = async (changes: Partial<PlayerData>) => {
-  //   setPlayer((prev) => {
-  //     const updated = { ...prev, ...changes };
-  //     savePlayerData(updated);
-  //     return updated;
-  //   });
+  //   setPlayer((prev) => ({ ...prev, ...changes }));
   // };
 
+  // функция для сохранения данных игрока 
+  const updatePlayer = async (changes: Partial<PlayerData>) => {
+    setPlayer((prev) => {
+      const updated = { ...prev, ...changes };
+      savePlayerData(updated);
+      return updated;
+    });
+  };
 
 
-  // useEffect(() => {
-  //   loadPlayerData().then((stored) => {
-  //     if (stored) {
-  //       setPlayer({
-  //         ...defaultPlayerData(),
-  //         ...stored,
-  //         choices: {
-  //           ...defaultPlayerData().choices,
-  //           ...stored.choices,
-  //         },
-  //       });
-  //     }
-  //   });
-  // }, []);
+
+  useEffect(() => {
+    loadPlayerData().then((stored) => {
+      if (stored) {
+        setPlayer({
+          ...defaultPlayerData(),
+          ...stored,
+          choices: {
+            ...defaultPlayerData().choices,
+            ...stored.choices,
+          },
+        });
+      }
+    });
+  }, []);
 
   return (
     <PlayerContext.Provider
@@ -75,8 +67,6 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
         modalType,
         setModalType,
         updatePlayer,
-        day1Choice,
-        setDay1Choice,
       }}
     >
       {children}

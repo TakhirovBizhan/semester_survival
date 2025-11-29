@@ -7,7 +7,7 @@ import { useHandleBeer } from "../Hooks/HandleBeer";
 import { useHandleStudy } from "../Hooks/HandleStudy";
 
 export const FirstChoiceModal = () => {
-  const { modalType, setModalType, setDay1Choice } = usePlayer();
+  const { modalType, setModalType } = usePlayer();
   const handleBeer = useHandleBeer();
   const handleStudy = useHandleStudy();
 
@@ -46,11 +46,10 @@ export const FirstChoiceModal = () => {
             Куда пойдёшь?
           </Text>
 
-          {/* 🍺 CHOICE 1 */}
+          {/* 🍺 выбрать пиво */}
           <Button
             title="Пойти за пивом 🍺"
             onPress={() => {
-              setDay1Choice("choice1");
               handleAction(
                 handleBeer,
                 "🍺 Настроение улучшилось, учёба немного просела!"
@@ -58,11 +57,10 @@ export const FirstChoiceModal = () => {
             }}
           />
 
-          {/* 🎓 CHOICE 2 */}
+          {/* 🎓 выбрать учебу */}
           <Button
             title="Пойти на учёбу 🎓"
             onPress={() => {
-              setDay1Choice("choice2");
               handleAction(
                 handleStudy,
                 "🎓 Учёба выросла, настроение немного понизилось!"
