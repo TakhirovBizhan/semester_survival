@@ -43,6 +43,7 @@ export default function Day1() {
           return;
         }
         
+        
         const { sound } = await Audio.Sound.createAsync(
           require("../../assets/music/day1.mp3"),
           { shouldPlay: true, isLooping: true, volume }
@@ -57,30 +58,43 @@ export default function Day1() {
 
     loadMusic();
 
-    return () => {
-      isMounted = false;
+  //   return () => {
+  //     isMounted = false;
     
+  //     if (music) {
+  //       (async () => {
+  //         try {
+  //           await music.stopAsync();
+  //           await music.unloadAsync();
+  //         } catch (e) {
+  //           console.log("cleanup error:", e);
+  //         }
+  //       })();
+  //     }
+  //   };
+
+  // }, []);
+      return () => {
+      isMounted = false;
       if (music) {
-        (async () => {
-          try {
-            await music.stopAsync();
-            await music.unloadAsync();
-          } catch (e) {
-            console.log("cleanup error:", e);
-          }
-        })();
+        music.stopAsync().catch(console.warn);
+        music.unloadAsync().catch(console.warn);
       }
     };
-
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (sound) {
+  //     sound.setVolumeAsync(volume).catch((e) =>
+  //       console.warn("Ошибка установки громкости:", e)
+  //     );
+  //   }
+  // }, [volume, sound]);
+    useEffect(() => {
     if (sound) {
-      sound.setVolumeAsync(volume).catch((e) =>
-        console.warn("Ошибка установки громкости:", e)
-      );
+      sound.setVolumeAsync(volume).catch(console.warn);
     }
-  }, [volume, sound]);
+  }, [sound, volume]);
 
   // =============================
   //   ФОН

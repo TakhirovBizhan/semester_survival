@@ -38,11 +38,11 @@ export default function Index() {
     >
       <Menu>
         {/* тут потом динамически будет день по сохранению */}
-        <Link href={`../day1`}>
+        <Link href="/day1" asChild>
           <Button title="Играть" onPress={() => updatePlayer(defaultPlayerData())} />
         </Link>
         <Button title="Настройки" onPress={() => setModalType("settings")} />
-        <Link href="../statistic">
+        <Link href="../statistic" asChild>
           <Button title="Статистика" />
         </Link>
         <Button title="Выход" />
