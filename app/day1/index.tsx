@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, ImageBackground, Platform, Text, View } from "react-native";
+import {
+  Dimensions,
+  ImageBackground,
+  Platform,
+  Text,
+  View,
+} from "react-native";
 import { Button } from "../components/button";
 import { Dialog } from "../components/dialog";
 import { usePlayer } from "../context/playerContext";
@@ -20,7 +26,14 @@ import { Audio } from "expo-av";
 const { width, height } = Dimensions.get("window");
 
 export default function Day1() {
-  const { player, isTypingDone, setIsTypingDone, index, setIndex, setModalType } = usePlayer();
+  const {
+    player,
+    isTypingDone,
+    setIsTypingDone,
+    index,
+    setIndex,
+    setModalType,
+  } = usePlayer();
 
   const dialogs = useDialogs();
   const currentDialog = dialogs[index];
@@ -42,8 +55,7 @@ export default function Day1() {
           console.log("Музыка отключена на Web");
           return;
         }
-        
-        
+
         const { sound } = await Audio.Sound.createAsync(
           require("../../assets/music/day1.mp3"),
           { shouldPlay: true, isLooping: true, volume }
@@ -58,23 +70,23 @@ export default function Day1() {
 
     loadMusic();
 
-  //   return () => {
-  //     isMounted = false;
-    
-  //     if (music) {
-  //       (async () => {
-  //         try {
-  //           await music.stopAsync();
-  //           await music.unloadAsync();
-  //         } catch (e) {
-  //           console.log("cleanup error:", e);
-  //         }
-  //       })();
-  //     }
-  //   };
+    //   return () => {
+    //     isMounted = false;
 
-  // }, []);
-      return () => {
+    //     if (music) {
+    //       (async () => {
+    //         try {
+    //           await music.stopAsync();
+    //           await music.unloadAsync();
+    //         } catch (e) {
+    //           console.log("cleanup error:", e);
+    //         }
+    //       })();
+    //     }
+    //   };
+
+    // }, []);
+    return () => {
       isMounted = false;
       if (music) {
         music.stopAsync().catch(console.warn);
@@ -90,7 +102,7 @@ export default function Day1() {
   //     );
   //   }
   // }, [volume, sound]);
-    useEffect(() => {
+  useEffect(() => {
     if (sound) {
       sound.setVolumeAsync(volume).catch(console.warn);
     }
@@ -128,7 +140,10 @@ export default function Day1() {
       style={{ width, height, flex: 1 }}
       resizeMode="cover"
     >
-      <View style={{ position: "absolute", top: 6, left: 6, zIndex: 50 }} pointerEvents="none">
+      <View
+        style={{ position: "absolute", top: 6, left: 6, zIndex: 50 }}
+        pointerEvents="none"
+      >
         <Text style={{ color: "white", fontSize: 12 }}>
           {`index: ${index}  lastChoice: ${String(player.lastChoice)}`}
         </Text>

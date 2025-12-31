@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Button } from "../components/button";
 import { ModalWindow } from "../components/modalWindow";
 import { usePlayer } from "../context/playerContext";
@@ -42,10 +42,13 @@ export const LabChoiceModal = () => {
           >
             Как сдаёшь лабораторную?
           </Text>
-          <Button
-            title="Использовать интеллект 🧠"
+          <Pressable
             onPress={() => handleOption("intelligence")}
-          />
+            >
+            <Text style={{fontSize: 16}}>
+              Использовать интеллект 🧠
+            </Text>
+          </Pressable>
           <Button
             title="Использовать харизму 😎"
             onPress={() => handleOption("charisma")}

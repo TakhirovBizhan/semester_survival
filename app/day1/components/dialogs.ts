@@ -1,6 +1,6 @@
 import { usePlayer } from "../../context/playerContext";
 
-export const day1ChoiceBackgrounds = {
+export const dayChoiceBackgrounds = {
   morning: require("../../../assets/bg/morning.png"), // утро
   beer: require("../../../assets/bg/bar.png"),   // пиво
   university: require("../../../assets/bg/Uni.png"),   // учёба
@@ -17,21 +17,21 @@ export const useDialogs = () => {
   const { player, setModalType } = usePlayer();
 
   let dialogs = [
-    { text: "День 1", background: day1ChoiceBackgrounds.morning },
-    { text: "МММ? Что за странный звук? И вообще где я?", background: day1ChoiceBackgrounds.morning },
-    { text: "Наверное более важный вопрос, кто я?", background: day1ChoiceBackgrounds.morning },
+    { text: "День 1", background: dayChoiceBackgrounds.morning },
+    { text: "МММ? Что за странный звук? И вообще где я?", background: dayChoiceBackgrounds.morning },
+    { text: "Наверное более важный вопрос, кто я?", background: dayChoiceBackgrounds.morning },
 
     {
-      text: "Да... Этот вопрос гораздо важнее, а ведь меня назвали в честь деда, эх как же его звали?", background: day1ChoiceBackgrounds.morning,
+      text: "Да... Этот вопрос гораздо важнее, а ведь меня назвали в честь деда, эх как же его звали?", background: dayChoiceBackgrounds.morning,
     },
 
-    { action: () => setModalType("name"), background: day1ChoiceBackgrounds.morning },
+    { action: () => setModalType("name"), background: dayChoiceBackgrounds.morning },
 
-    { text: `Да точно же! Его звали ${player.name}`, background: day1ChoiceBackgrounds.morning },
+    { text: `Да точно же! Его звали ${player.name}`, background: dayChoiceBackgrounds.morning },
 
-    { text: "Ну ладно, мне пора вставать, но куда же мне пойти?", background: day1ChoiceBackgrounds.morning },
+    { text: "Ну ладно, мне пора вставать, но куда же мне пойти?", background: dayChoiceBackgrounds.morning },
 
-    { action: () => setModalType("firstChoice"), background: day1ChoiceBackgrounds.morning },
+    { action: () => setModalType("firstChoice"), background: dayChoiceBackgrounds.morning },
   ];
 
   // -------------------------
@@ -42,13 +42,13 @@ export const useDialogs = () => {
     dialogs.push(
       {
         text: "Ты решил пойти в бар и немного расслабиться.",
-        background: day1ChoiceBackgrounds.beer,
+        background: dayChoiceBackgrounds.beer,
       },
   
-      { text: "Пиво оказалось на удивление вкусным и холодным.", background: day1ChoiceBackgrounds.beer, },
-      { text: "Ты почувствовал себя лучше, но и немного уставшим.", background: day1ChoiceBackgrounds.beer, },
-      { text: "Тяжёлый был денек...", background: day1ChoiceBackgrounds.sleep,},
-      { text: "Всегда можно начать сначала...", background: day1ChoiceBackgrounds.sleep, },
+      { text: "Пиво оказалось на удивление вкусным и холодным.", background: dayChoiceBackgrounds.beer, },
+      { text: "Ты почувствовал себя лучше, но и немного уставшим.", background: dayChoiceBackgrounds.beer, },
+      { text: "Тяжёлый был денек...", background: dayChoiceBackgrounds.sleep,},
+      { text: "Всегда можно начать сначала...", background: dayChoiceBackgrounds.sleep, },
     );
   }
   
@@ -56,13 +56,13 @@ export const useDialogs = () => {
     dialogs.push(
       {
         text: "Ты решил пойти на учебу, но впереди тебя ждёт лабораторная...",
-        background: day1ChoiceBackgrounds.university,
+        background: dayChoiceBackgrounds.university,
       },
   
-      { text: "Преподаватель смотрит на тебя строго. Как ты поступишь?", background: day1ChoiceBackgrounds.inClass },
-      { action: () => setModalType("labChoice"), background: day1ChoiceBackgrounds.university },
-      { text: "Тяжелый был денек...", background: day1ChoiceBackgrounds.sleep},
-      { text: "Всегда можно начать сначала...", background: day1ChoiceBackgrounds.sleep },
+      { text: "Преподаватель смотрит на тебя строго. Как ты поступишь?", background: dayChoiceBackgrounds.inClass },
+      { action: () => setModalType("labChoice"), background: dayChoiceBackgrounds.university },
+      { text: "Тяжелый был денек...", background: dayChoiceBackgrounds.sleep},
+      { text: "Всегда можно начать сначала...", background: dayChoiceBackgrounds.sleep },
     );
   }
 
