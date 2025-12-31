@@ -46,7 +46,10 @@ export const IntelligenceModal = () => {
   };
 
   return (
-    <ModalWindow visible onClose={() => setModalType("none")}>
+<ModalWindow 
+      visible 
+      onClose={() => { /* пустая функция, закрытие через крестик запрещено */ }}
+    >
       {!resultText ? (
         <>
           <Text style={{ color: "white", fontSize: 18, marginBottom: 10 }}>Реши задачу:</Text>

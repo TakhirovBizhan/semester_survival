@@ -1,22 +1,28 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Modal, StyleSheet, View } from "react-native";
+import { BlurView } from "expo-blur";
 
 type ModalWindowProps = {
   visible: boolean;
-  onClose?: () => void;
-  children: React.ReactNode;
+  onClose: () => void;
+  children: ReactNode;
 };
 
 export const ModalWindow: React.FC<ModalWindowProps> = ({ visible, onClose, children }) => {
   return (
     <Modal
+      animationType="fade"
       transparent
       visible={visible}
-      animationType="fade"
-      onRequestClose={onClose} // для Android кнопки "назад"
+      onRequestClose={onClose}
     >
       <View style={styles.overlay}>
-        <View style={styles.box}>{children}</View>
+        <BlurView intensity={50} style={StyleSheet.absoluteFill} tint="dark" />
+
+        {/* Контейнер модалки — не закрывается при клике */}
+        <View style={styles.content}>
+          {children}
+        </View>
       </View>
     </Modal>
   );
@@ -25,19 +31,13 @@ export const ModalWindow: React.FC<ModalWindowProps> = ({ visible, onClose, chil
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.6)",
     justifyContent: "center",
     alignItems: "center",
   },
-  box: {
-    backgroundColor: "#111",
-    borderColor: "#fff",
-    borderWidth: 3,
+  content: {
     padding: 20,
-    width: "80%",
-    borderRadius: 0,
-    shadowColor: "#000",
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
+    maxWidth: "90%",
+    maxHeight: "90%",
+    backgroundColor: "transparent",
   },
 });

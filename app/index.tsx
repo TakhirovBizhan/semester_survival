@@ -1,30 +1,78 @@
 import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import { BackHandler, ImageBackground, Platform, StyleSheet } from "react-native";
 import { Button } from './components/button';
 import { Menu } from "./components/menu";
-import { baseColor } from "./config/Colors";
+// import { baseColor } from "./config/Colors";
+import { useEffect, useState } from "react";
 import { usePlayer } from "./context/playerContext";
+import { defaultPlayerData } from "./storage/userStorage";
+import { SettingsModal } from "./UI/SettingsModal";
+
+
+
+// путь к картинке фона
+const backgroundImage = require("../assets/bg/main.png");
 
 export default function Index() {
-  const { player } = usePlayer();
+  const {  setModalType, updatePlayer } = usePlayer();
+  const [volume, setVolume] = useState(1);
+
+
+  //Фича под андроид, открытые настроек при нажатии на кнопку назад
+  useEffect(() => {
+    if (Platform.OS !== "android") return;
+    const handler = BackHandler.addEventListener("hardwareBackPress", () => {
+      setModalType("settings");
+      return true; // блокируем выход из приложения
+    });
+
+    return () => handler.remove();
+  }, []);
+
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: baseColor,
-      }}
+    <ImageBackground
+      source={backgroundImage}
+      style={styles.background}
+      resizeMode="cover"
     >
-      <Text>Тут будет основное меню, которое появляется при запуске игры</Text>
       <Menu>
-      <Link href={`../day${player.currentDay}`}><Button title={"Play"}/></Link>
-      <Link href="../settings"><Button title={"settings"}/></Link>
-      <Link href="../statistic"><Button title={"stats"}/></Link>
-      <Button title="Exit" disabled />
+        {/* тут потом динамически будет день по сохранению */}
+        <Link href="/day1" asChild>
+          <Button title="Играть" onPress={() => updatePlayer(defaultPlayerData())} />
+        </Link>
+        <Button title="Настройки" onPress={() => setModalType("settings")} />
+        <Link href="../statistic" asChild>
+          <Button title="Статистика" />
+        </Link>
+        <Button title="Выход" />
       </Menu>
-    </View>
+
+      {/* Модальное окно настроек */}
+      <SettingsModal volume={volume} setVolume={setVolume} />
+      
+    </ImageBackground>
   );
 }
 
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  blur: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    backgroundColor: "transparent",
+  },
+  title: {
+    marginBottom: 20,
+    color: "white",
+    textAlign: "center",
+    fontSize: 16,
+    fontFamily: "monospace",
+  },
+});

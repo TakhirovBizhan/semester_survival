@@ -10,20 +10,28 @@ export const FirstChoiceModal = () => {
   const { modalType, setModalType } = usePlayer();
   const handleBeer = useHandleBeer();
   const handleStudy = useHandleStudy();
+
   const [result, setResult] = useState<string | null>(null);
 
   if (modalType !== "firstChoice") return null;
 
+  // -----------------------
+  // ВАЖНО: handleAction ДОЛЖНА быть выше onPress
+  // -----------------------
   const handleAction = (fn: () => void, message: string) => {
-    setResult(message); // показываем результат
-    // Закрываем окно только через 1.5 сек
+    setResult(message);
+
     setTimeout(() => {
-        fn(); // обновляем игрока
+      fn();
+      setModalType("none");
     }, 1500);
   };
 
   return (
-    <ModalWindow visible onClose={() => setModalType("none")}>
+<ModalWindow 
+      visible 
+      onClose={() => { /* пустая функция, закрытие через крестик запрещено */ }}
+    >
       {!result ? (
         <View>
           <Text
@@ -37,23 +45,27 @@ export const FirstChoiceModal = () => {
           >
             Куда пойдёшь?
           </Text>
+
+          {/* 🍺 выбрать пиво */}
           <Button
             title="Пойти за пивом 🍺"
-            onPress={() =>
+            onPress={() => {
               handleAction(
                 handleBeer,
                 "🍺 Настроение улучшилось, учёба немного просела!"
-              )
-            }
+              );
+            }}
           />
+
+          {/* 🎓 выбрать учебу */}
           <Button
             title="Пойти на учёбу 🎓"
-            onPress={() =>
+            onPress={() => {
               handleAction(
                 handleStudy,
                 "🎓 Учёба выросла, настроение немного понизилось!"
-              )
-            }
+              );
+            }}
           />
         </View>
       ) : (

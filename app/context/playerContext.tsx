@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { PlayerData, defaultPlayerData, loadPlayerData, savePlayerData } from "../storage/userStorage";
 
-type ModalType = "none" | "name" | "firstChoice" | "labChoice" | "intelligence" | "charisma" | 'endDay';
+type ModalType = "none" | "name" | "firstChoice" | "labChoice" | "intelligence" | "charisma" | "endDay" | "settings";
 
 type PlayerContextType = {
   player: PlayerData;
@@ -23,16 +23,23 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   const [isTypingDone, setIsTypingDone] = useState(false);
   const [modalType, setModalType] = useState<ModalType>("none");
 
-  // Обновление игрока и сохранение в storage
-   const updatePlayer = async (changes: Partial<PlayerData>) => {
+
+  // какая то непонятная затычка для игрока.
+  // const updatePlayer = async (changes: Partial<PlayerData>) => {
+  //   setPlayer((prev) => ({ ...prev, ...changes }));
+  // };
+
+  // функция для сохранения данных игрока 
+  const updatePlayer = async (changes: Partial<PlayerData>) => {
     setPlayer((prev) => {
-      const updated: PlayerData = { ...prev, ...changes };
+      const updated = { ...prev, ...changes };
       savePlayerData(updated);
       return updated;
     });
   };
 
-  // Загрузка сохраненных данных
+
+
   useEffect(() => {
     loadPlayerData().then((stored) => {
       if (stored) {
@@ -67,11 +74,8 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Хук для удобного использования контекста
 export const usePlayer = () => {
   const context = useContext(PlayerContext);
-  if (!context) {
-    throw new Error("usePlayer must be used within a PlayerProvider");
-  }
+  if (!context) throw new Error("usePlayer must be used within a PlayerProvider");
   return context;
 };

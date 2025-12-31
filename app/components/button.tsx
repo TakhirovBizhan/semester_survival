@@ -1,30 +1,43 @@
-import { primaryTextColor, secondaryColor } from "@/app/config/Colors";
+import { primaryTextColor } from "@/app/config/Colors";
 import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
-// Типы пропсов кнопки
 type ButtonProps = {
-  title: string;        // текст, который будет отображаться на кнопке
-  onPress?: () => void; // функция, которая вызывается при нажатии
-  disabled?: boolean;   // состояние: активна или заблокирована
+  title: string;
+  onPress?: () => void;
+  disabled?: boolean;
+  square?: boolean; // новый проп
+  variant?: "pause"; // новый кастомный стиль
 };
 
-// Компонент кнопки
 export const Button: React.FC<ButtonProps> = ({
   title,
   onPress,
-  disabled = false, // по умолчанию кнопка активна
+  disabled = false,
+  square = false,
+  variant,
 }) => {
   return (
     <Pressable
-      // массив стилей: базовый + если кнопка заблокирована
-      style={[styles.button, disabled && styles.disabled]}
       onPress={onPress}
-      disabled={disabled} // блокировка нажатия
+      disabled={disabled}
+      style={({ pressed }) => [
+        styles.button,
+        square && styles.squareButton, // <-- добавлено, чтобы square работал
+        disabled && styles.disabled,
+        pressed && styles.pressed,
+        variant === "pause" && styles.pauseButton, // <-- добавил, чтобы pauseButton работал
+      ]}
+      android_ripple={{ color: 'rgba(255,255,255,0.2)' }} // <-- Ripple только на Android
     >
+      {/* Исправлено: убран внутренний View, текст теперь напрямую внутри Pressable, чтобы onPress срабатывал */}
       <Text
-        // массив стилей для текста: базовый + стиль для "disabled"
-        style={[styles.text, disabled && styles.textDisabled]}
+        style={[
+          styles.text,
+          variant === "pause" && styles.pauseText,
+          disabled && styles.textDisabled,
+        ]}
+        numberOfLines={1} // <-- чтобы текст не “сползал”
       >
         {title}
       </Text>
@@ -32,31 +45,90 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-// Стили кнопки
+const BUTTON_WIDTH = 220; // фиксированная ширина всех кнопок
+
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#2d2d2d", // фон
-    borderWidth: 4,             // толщина границы
-    borderBlockColor: secondaryColor,       // цвет границы
-    paddingVertical: 10,        // внутренние отступы по вертикали
-    paddingHorizontal: 16,      // внутренние отступы по горизонтали
-    alignItems: "center",       // выравнивание по горизонтали
-    justifyContent: "center",   // выравнивание по вертикали
-    borderRadius: 0,            // углы без скругления (пиксельный стиль)
-    marginBlock: 10,
+    width: BUTTON_WIDTH, // все кнопки одинаковой ширины
+    height: 50, // <-- добавлено фиксированное height для Android, чтобы текст центрировался
+    backgroundColor: "rgba(0,0,0,0.45)", // полупрозрачная кнопка
+    marginVertical: 10,
+    shadowColor: "#000",
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    shadowOffset: { width: 3, height: 3 },
+    // transform оставляем, ripple на Android работает корректно
+    transform: [{ translateY: 0 }],
+    alignItems: "center", // текст по центру
+    justifyContent: "center", // <-- добавлено, чтобы текст был по центру вертикально
+
+    //настройка для андроид
+    overflow: 'hidden',
+    // тень для Android
+    elevation: 4,
   },
+
+  squareButton: {
+    width: 45,
+    height: 45,
+    padding: 0,
+    // borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  // Кастомный стиль "паузной" кнопки
+  pauseButton: {
+    backgroundColor: "#000",      // чёрный фон
+    borderWidth: 2,
+    borderColor: "#fff",          // белая рамка
+    shadowOffset: { width: 2, height: 2 },
+    width: 45,
+    height: 45,
+    justifyContent: "center", // <-- добавлено для вертикального центрирования текста
+    alignItems: "center",     // <-- добавлено для вертикального центрирования текста
+  },
+
+  pauseInner: {
+    padding: 0,
+  },
+
+  pauseText: {
+    color: "#fff",
+    fontSize: 26,
+    textShadowColor: "transparent",
+    textAlign: "center", // <-- добавлено, чтобы на Android текст был по центру
+  },
+
+  pressed: {
+    shadowOffset: { width: 1, height: 1 },
+    transform: [{ translateY: 2 }],
+    opacity: 0.7,
+  },
+
+  inner: {
+    paddingHorizontal: 8,
+    alignItems: "center",
+    justifyContent: "center", // <-- оставлено для центрирования текста
+  },
+
   text: {
-    color: primaryTextColor,             // белый цвет текста
-    fontSize: 16,              // размер шрифта
-    fontWeight: "bold",        // жирный
-    fontFamily: "monospace",   // моноширинный шрифт (эффект пиксельного)
-    textTransform: "uppercase" // все буквы капсом
+    color: primaryTextColor,
+    fontSize: 20,
+    fontFamily: "monospace",
+    textTransform: "uppercase",
+    textAlign: "center",
+    textShadowColor: "#000",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 0,
   },
+
   disabled: {
-    backgroundColor: "#555", // серый фон, если кнопка выключена
-    borderColor: "#333",     // тёмная граница
+    backgroundColor: "rgba(50, 50, 50, 0.4)",
+    shadowOffset: { width: 2, height: 2 },
   },
+
   textDisabled: {
-    color: "#aaa", // тусклый текст
+    color: "#777",
   },
 });
