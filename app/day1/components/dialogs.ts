@@ -44,24 +44,24 @@ export const useDialogs = () => {
         text: "Ты решил пойти в бар и немного расслабиться.",
         background: dayChoiceBackgrounds.beer,
       },
-  
+
       { text: "Пиво оказалось на удивление вкусным и холодным.", background: dayChoiceBackgrounds.beer, },
       { text: "Ты почувствовал себя лучше, но и немного уставшим.", background: dayChoiceBackgrounds.beer, },
-      { text: "Тяжёлый был денек...", background: dayChoiceBackgrounds.sleep,},
+      { text: "Тяжёлый был денек...", background: dayChoiceBackgrounds.sleep, },
       { text: "Всегда можно начать сначала...", background: dayChoiceBackgrounds.sleep, },
     );
   }
-  
+
   if (player.lastChoice === "study") {
     dialogs.push(
       {
         text: "Ты решил пойти на учебу, но впереди тебя ждёт лабораторная...",
         background: dayChoiceBackgrounds.university,
       },
-  
+
       { text: "Преподаватель смотрит на тебя строго. Как ты поступишь?", background: dayChoiceBackgrounds.inClass },
-      { action: () => setModalType("labChoice"), background: dayChoiceBackgrounds.university },
-      { text: "Тяжелый был денек...", background: dayChoiceBackgrounds.sleep},
+      { action: () => setModalType("labChoice"), background: dayChoiceBackgrounds.inClass },
+      { text: "Тяжелый был денек...", background: dayChoiceBackgrounds.sleep },
       { text: "Всегда можно начать сначала...", background: dayChoiceBackgrounds.sleep },
     );
   }
