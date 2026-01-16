@@ -34,10 +34,24 @@ export const SaveSlotsModal: React.FC = () => {
     }
   }, []);
 
-  // Загружаем сохранения при открытии модалки
+  // Загружаем сохранения при открытии модалки и сбрасываем состояние
   useEffect(() => {
     if (isVisible) {
+      // Сбрасываем состояние при открытии модалки
+      console.log("Модалка сохранений открыта, сбрасываем состояние");
+      setCreating(false);
+      setEditingId(null);
+      setEditName("");
+      setNewSaveName("");
+      setLoading(false);
       loadSaves();
+    } else {
+      // Сбрасываем состояние при закрытии модалки
+      console.log("Модалка сохранений закрыта, сбрасываем состояние");
+      setCreating(false);
+      setEditingId(null);
+      setEditName("");
+      setNewSaveName("");
     }
   }, [isVisible, loadSaves]);
 
@@ -256,19 +270,33 @@ export const SaveSlotsModal: React.FC = () => {
         <Text style={{ color: "white", marginBottom: 8, fontSize: 14 }}>Создать новое сохранение</Text>
         <TextInput
           style={{
-            backgroundColor: "rgba(255,255,255,0.2)",
-            color: "white",
+            backgroundColor: creating ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.2)",
+            color: creating ? "rgba(255,255,255,0.5)" : "white",
             padding: 8,
             borderRadius: 4,
             marginBottom: 8,
             borderWidth: 1,
-            borderColor: "rgba(255,255,255,0.3)",
+            borderColor: creating ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.3)",
           }}
           placeholder="Имя сохранения"
           placeholderTextColor="rgba(255,255,255,0.5)"
           value={newSaveName}
-          onChangeText={setNewSaveName}
+          onChangeText={(text) => {
+            console.log("TextInput onChangeText:", text, "creating:", creating);
+            setNewSaveName(text);
+          }}
           maxLength={30}
+          editable={!creating}
+          selectTextOnFocus={false}
+          autoFocus={false}
+          onFocus={() => {
+            console.log("TextInput получил фокус, creating:", creating);
+            // Убеждаемся, что creating = false
+            if (creating) {
+              console.warn("TextInput заблокирован, сбрасываем creating");
+              setCreating(false);
+            }
+          }}
         />
         <Button
           title={creating ? "Создание..." : "Создать сохранение"}
