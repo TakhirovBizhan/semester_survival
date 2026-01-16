@@ -34,6 +34,12 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
     setPlayer((prev) => {
       const updated = { ...prev, ...changes };
       savePlayerData(updated);
+      // Синхронизация с Firebase (асинхронно, не блокирует UI)
+      import("../services/firebaseSync").then(({ firebaseSync }) => {
+        firebaseSync.syncProgress(updated).catch((error) => {
+          console.error("Ошибка синхронизации:", error);
+        });
+      });
       return updated;
     });
   };
@@ -52,6 +58,13 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
           },
         });
       }
+    });
+
+    // Инициализация Firebase синхронизации
+    import("../services/firebaseSync").then(({ firebaseSync }) => {
+      firebaseSync.initialize().catch((error) => {
+        console.error("Ошибка инициализации Firebase:", error);
+      });
     });
   }, []);
 
