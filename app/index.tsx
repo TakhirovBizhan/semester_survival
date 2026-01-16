@@ -1,23 +1,29 @@
 import { useRouter } from "expo-router";
-import { BackHandler, ImageBackground, Platform, StyleSheet, View, ActivityIndicator, Text } from "react-native";
-import { Button } from './components/button';
+import {
+  ActivityIndicator,
+  BackHandler,
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { Button } from "./components/button";
 import { Menu } from "./components/menu";
 // import { baseColor } from "./config/Colors";
 import { useEffect, useState } from "react";
+import { primaryTextColor } from "./config/Colors";
 import { usePlayer } from "./context/playerContext";
 import { SettingsModal } from "./UI/SettingsModal";
-import { primaryTextColor } from "./config/Colors";
-
-
 
 // путь к картинке фона
 const backgroundImage = require("../assets/bg/main.png");
 
 export default function Index() {
-  const { setModalType, player, isLoadingProgress, setIndex, startNewGame } = usePlayer();
+  const { setModalType, player, isLoadingProgress, setIndex, startNewGame } =
+    usePlayer();
   const [volume, setVolume] = useState(1);
   const router = useRouter();
-
 
   //Фича под андроид, открытые настроек при нажатии на кнопку назад
   useEffect(() => {
@@ -29,7 +35,6 @@ export default function Index() {
 
     return () => handler.remove();
   }, []);
-
 
   return (
     <ImageBackground
@@ -47,17 +52,21 @@ export default function Index() {
 
       <Menu>
         {/* Кнопка "Играть" - продолжает с сохраненного прогресса или начинает заново */}
-        <Button 
-          title={player.currentDay > 1 ? `Продолжить (День ${player.currentDay})` : "Играть"} 
+        <Button
+          title={
+            player.currentDay > 1
+              ? `Продолжить (День ${player.currentDay})`
+              : "Играть"
+          }
           onPress={() => {
             // Сбрасываем индекс диалога для начала дня
             setIndex(0);
-            
+
             // Определяем на какой день переходить
             const targetDay = player.currentDay;
-            
+
             // Проверяем, не закончена ли игра (день 5 завершен)
-            if (targetDay > 5) {
+            if (targetDay > 4) {
               // Игра завершена - переходим на концовку
               if (player.academic <= 0) {
                 router.push("/endings/badEnding" as never);
@@ -68,30 +77,33 @@ export default function Index() {
               // Переходим на соответствующий день
               router.push(`/day${targetDay}` as never);
             }
-          }} 
+          }}
         />
         {/* Кнопка "Начать новую игру" - сбрасывает прогресс и начинает заново */}
-        <Button 
-          title="Начать новую игру" 
+        <Button
+          title="Начать новую игру"
           onPress={async () => {
             // Сбрасываем прогресс
             await startNewGame();
             // Переходим на день 1
             setIndex(0);
             router.push("/day1" as never);
-          }} 
+          }}
         />
         <Button title="Настройки" onPress={() => setModalType("settings")} />
-        <Button 
-          title="Статистика" 
-          onPress={() => router.push("/statistic" as never)} 
+        <Button
+          title="Статистика"
+          onPress={() => router.push("/statistic" as never)}
+        />
+        <Button
+          title="Правила игры"
+          onPress={() => router.push("/rules" as never)}
         />
         <Button title="Выход" />
       </Menu>
 
       {/* Модальное окно настроек */}
       <SettingsModal volume={volume} setVolume={setVolume} />
-      
     </ImageBackground>
   );
 }
