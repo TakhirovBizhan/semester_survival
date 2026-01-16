@@ -1,12 +1,13 @@
 // app/UI/SettingsModal.tsx
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { ModalWindow } from "../components/modalWindow";
 import { Button } from "../components/button";
 import { usePlayer } from "../context/playerContext";
 import { useRouter } from "expo-router";
 import { SyncStatus } from "../components/SyncStatus";
 import { firebaseSync } from "../services/firebaseSync";
+import { saveSlotsService } from "../services/saveSlotsService";
 
 import Slider from "@react-native-community/slider";
 
@@ -94,6 +95,33 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ volume, setVolume 
           title={syncing ? "Загрузка..." : "Загрузить с сервера"}
           onPress={handleLoadFromServer}
           disabled={syncing}
+        />
+      </View>
+
+      {/* Управление сохранениями */}
+      <View style={{ marginVertical: 10 }}>
+        <Text style={{ color: "white", marginBottom: 8, fontSize: 14 }}>Сохранения</Text>
+        <Button
+          title="Быстрое сохранение"
+          onPress={async () => {
+            try {
+              const saveName = `Сохранение ${new Date().toLocaleString("ru-RU", {
+                day: "2-digit",
+                month: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}`;
+              await saveSlotsService.createSave(saveName, player);
+              Alert.alert("Успех", "Сохранение создано!");
+            } catch (error) {
+              console.error("Ошибка быстрого сохранения:", error);
+              Alert.alert("Ошибка", "Не удалось создать сохранение");
+            }
+          }}
+        />
+        <Button
+          title="Управление сохранениями"
+          onPress={() => setModalType("saveSlots")}
         />
       </View>
 

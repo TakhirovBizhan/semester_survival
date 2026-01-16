@@ -22,7 +22,8 @@ type ModalType =
   | "intellect"
   | "charisma"
   | "endDay"
-  | "settings";
+  | "settings"
+  | "saveSlots";
 
 type PlayerContextType = {
   player: PlayerData;

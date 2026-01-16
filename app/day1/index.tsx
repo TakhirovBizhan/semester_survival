@@ -20,6 +20,7 @@ import { IntelligenceModal } from "../UI/IntelligenceModal";
 import { LabChoiceModal } from "../UI/LabChoiceModal";
 import { ProgressSection } from "../UI/ProgressSection";
 import { SettingsModal } from "../UI/SettingsModal";
+import { SaveSlotsModal } from "../UI/SaveSlotsModal";
 
 import { Audio } from "expo-av";
 
@@ -164,6 +165,7 @@ export default function Day1() {
         <CharismaModal />
         <EndDayModal />
         <SettingsModal volume={volume} setVolume={setVolume} />
+        <SaveSlotsModal />
       </View>
     </ImageBackground>
   );

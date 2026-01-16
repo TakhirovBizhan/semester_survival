@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { primaryTextColor } from "./config/Colors";
 import { usePlayer } from "./context/playerContext";
 import { SettingsModal } from "./UI/SettingsModal";
+import { SaveSlotsModal } from "./UI/SaveSlotsModal";
 
 // путь к картинке фона
 const backgroundImage = require("../assets/bg/main.png");
@@ -92,6 +93,10 @@ export default function Index() {
         />
         <Button title="Настройки" onPress={() => setModalType("settings")} />
         <Button
+          title="Сохранения"
+          onPress={() => setModalType("saveSlots")}
+        />
+        <Button
           title="Статистика"
           onPress={() => router.push("/statistic" as never)}
         />
@@ -104,6 +109,7 @@ export default function Index() {
 
       {/* Модальное окно настроек */}
       <SettingsModal volume={volume} setVolume={setVolume} />
+      <SaveSlotsModal />
     </ImageBackground>
   );
 }
