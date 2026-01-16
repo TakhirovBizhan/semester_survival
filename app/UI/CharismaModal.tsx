@@ -2,42 +2,54 @@ import { ModalWindow } from "@/app/components/modalWindow";
 import { usePlayer } from "@/app/context/playerContext";
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
+import { useHandleLabChoice } from "../Hooks/HandleChoice";
 
 // Варианты фраз
 const charismaTasks = [
   {
     question: "Преподаватель недоволен. Что ты скажешь?",
-    options: ["Извините, я больше не опоздаю", "Это не моя вина!", "Молчать", "Сделать комплимент"],
+    options: [
+      "Извините, я больше не опоздаю",
+      "Это не моя вина!",
+      "Молчать",
+      "Сделать комплимент",
+    ],
   },
   {
     question: "Ты на вечеринке. Как впечатлить собеседника?",
-    options: ["Ты сегодня отлично выглядишь!", "Я устал", "Кто ты?", "Пошли домой"],
+    options: [
+      "Ты сегодня отлично выглядишь!",
+      "Я устал",
+      "Кто ты?",
+      "Пошли домой",
+    ],
   },
   {
     question: "Ты знакомишься с человеком. Что сказать?",
-    options: ["Рад знакомству!", "Ты где работаешь?", "А ты кто?", "Молча смотреть"],
+    options: [
+      "Рад знакомству!",
+      "Ты где работаешь?",
+      "А ты кто?",
+      "Молча смотреть",
+    ],
   },
 ];
 
 export const CharismaModal = () => {
-  const { modalType, setModalType, player, updatePlayer, setIndex, index } = usePlayer();
+  const handleLabChoice = useHandleLabChoice();
+  const { modalType, setModalType } = usePlayer();
   const [selected, setSelected] = useState<string | null>(null);
   const [resultText, setResultText] = useState<string | null>(null);
 
   if (modalType !== "charisma") return null;
 
   const task = charismaTasks[Math.floor(Math.random() * charismaTasks.length)];
-  const correctAnswer = task.options[Math.floor(Math.random() * task.options.length)];
+  const correctAnswer =
+    task.options[Math.floor(Math.random() * task.options.length)];
 
   const handleAnswer = (answer: string) => {
     if (selected) return; // блокируем повторные клики
     const isCorrect = answer === correctAnswer;
-    const delta = isCorrect ? 10 : -20;
-
-    updatePlayer({
-      happiness: Math.max(0, player.happiness + delta),
-      academic: Math.max(0, player.academic + delta),
-    });
 
     setSelected(answer);
     setResultText(
@@ -45,10 +57,9 @@ export const CharismaModal = () => {
         ? "😎 Отличный выбор! +10 к счастью и учёбе"
         : "😬 Неудачно! -20 к счастью и учёбе"
     );
-
+    handleLabChoice("charisma", isCorrect);
     setTimeout(() => {
       setModalType("none");
-      setIndex(index + 1);
     }, 1200);
   };
 
@@ -56,7 +67,9 @@ export const CharismaModal = () => {
     <ModalWindow visible onClose={() => setModalType("none")}>
       {!resultText ? (
         <>
-          <Text style={{ color: "white", fontSize: 18, marginBottom: 10 }}>{task.question}</Text>
+          <Text style={{ color: "white", fontSize: 18, marginBottom: 10 }}>
+            {task.question}
+          </Text>
           {task.options.map((opt) => (
             <View key={opt} style={{ marginVertical: 4 }}>
               <Button
@@ -68,7 +81,9 @@ export const CharismaModal = () => {
           ))}
         </>
       ) : (
-        <Text style={{ color: "white", fontSize: 18, textAlign: "center" }}>{resultText}</Text>
+        <Text style={{ color: "white", fontSize: 18, textAlign: "center" }}>
+          {resultText}
+        </Text>
       )}
     </ModalWindow>
   );

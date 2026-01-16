@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Button } from "../components/button";
 import { ModalWindow } from "../components/modalWindow";
 import { usePlayer } from "../context/playerContext";
@@ -25,9 +25,11 @@ export const LabChoiceModal = () => {
   };
 
   return (
-<ModalWindow 
-      visible 
-      onClose={() => { /* пустая функция, закрытие через крестик запрещено */ }}
+    <ModalWindow
+      visible
+      onClose={() => {
+        /* пустая функция, закрытие через крестик запрещено */
+      }}
     >
       {!result ? (
         <View>
@@ -42,21 +44,15 @@ export const LabChoiceModal = () => {
           >
             Как сдаёшь лабораторную?
           </Text>
-          <Pressable
+          <Button
             onPress={() => handleOption("intelligence")}
-            >
-            <Text style={{fontSize: 16}}>
-              Использовать интеллект 🧠
-            </Text>
-          </Pressable>
+            title="Использовать интеллект 🧠"
+          ></Button>
           <Button
             title="Использовать харизму 😎"
             onPress={() => handleOption("charisma")}
           />
-          <Button
-            title="Сдаться 😔"
-            onPress={() => handleOption("giveUp")}
-          />
+          <Button title="Сдаться 😔" onPress={() => handleOption("giveUp")} />
         </View>
       ) : (
         <View>

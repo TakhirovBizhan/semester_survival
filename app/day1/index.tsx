@@ -134,6 +134,8 @@ export default function Day1() {
     setIsTypingDone(false);
   };
 
+  console.log(dialogs, index);
+
   return (
     <ImageBackground
       source={background}

@@ -13,6 +13,7 @@ export interface PlayerData {
     giveUp: number;  // выбор "сдаться"
   };
   lastChoice: "beer" | "giveUp" | "study" | "intellect" | "charisma" | "";
+  isLastChoiceSuccess?: boolean;
 }
 
 /** ключ для хранения в AsyncStorage */
