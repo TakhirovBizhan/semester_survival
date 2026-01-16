@@ -1,6 +1,5 @@
 import { usePlayer } from "../context/playerContext";
-
-type LabType = "intellect" | "charisma" | "giveUp";
+import { LabType } from "../types/LabType.type";
 
 export const useHandleLabChoice = () => {
   const { player, updatePlayer, setModalType, setIndex, setIsTypingDone, index } = usePlayer();
@@ -51,7 +50,7 @@ export const useHandleLabChoice = () => {
     }
 
     setModalType("none");
-    setIndex(index + 1);
+    setIndex(index);
     setIsTypingDone(false);
   };
 

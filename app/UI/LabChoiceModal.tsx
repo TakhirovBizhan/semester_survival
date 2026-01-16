@@ -12,7 +12,7 @@ export const LabChoiceModal = () => {
 
   if (modalType !== "labChoice") return null;
 
-  const handleOption = (option: "intelligence" | "charisma" | "giveUp") => {
+  const handleOption = (option: "intellect" | "charisma" | "giveUp") => {
     if (option === "giveUp") {
       setResult("😔 Ты сдался — счастье и учёба уменьшились.");
       setTimeout(() => {
@@ -45,7 +45,7 @@ export const LabChoiceModal = () => {
             Как сдаёшь лабораторную?
           </Text>
           <Button
-            onPress={() => handleOption("intelligence")}
+            onPress={() => handleOption("intellect")}
             title="Использовать интеллект 🧠"
           ></Button>
           <Button

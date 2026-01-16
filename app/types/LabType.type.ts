@@ -1,0 +1,1 @@
+export type LabType = "intellect" | "charisma" | "giveUp";
