@@ -1,8 +1,16 @@
 import { Link } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { usePlayer } from "../context/playerContext";
 
 export default function GoodEnding() {
+  const { startNewGame } = usePlayer();
+
+  useEffect(() => {
+    // Сбрасываем прогресс при попадании на концовку
+    startNewGame();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>

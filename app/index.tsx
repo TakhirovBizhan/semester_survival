@@ -65,8 +65,8 @@ export default function Index() {
             // Определяем на какой день переходить
             const targetDay = player.currentDay;
 
-            // Проверяем, не закончена ли игра (день 5 завершен)
-            if (targetDay > 4) {
+            // Проверяем, не закончена ли игра (день 3 завершен)
+            if (targetDay > 3) {
               // Игра завершена - переходим на концовку
               if (player.academic <= 0) {
                 router.push("/endings/badEnding" as never);

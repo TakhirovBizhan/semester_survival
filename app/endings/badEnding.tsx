@@ -1,13 +1,26 @@
 import { Link } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { usePlayer } from "../context/playerContext";
 
-export default function BadEnding() {
+export default function GoodEnding() {
+  const { startNewGame } = usePlayer();
+
+  useEffect(() => {
+    // Сбрасываем прогресс при попадании на концовку
+    startNewGame();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>💀 Вам не удалось выжить 💀</Text>
+      <Text style={styles.title}>
+        🎉 Поздравляем! Вы успешно прошли игру! 🎉
+      </Text>
 
-      {/* Титры */}
+      <Text style={styles.text}>
+        Ваши усилия в учёбе помогли выжить и закончить всё на позитивной ноте.
+      </Text>
+
       <Text style={styles.text}>разработкой занимались</Text>
       <Text style={styles.credits}>Хартумов Б.</Text>
       <Text style={styles.credits}>Тахиров Б.</Text>
