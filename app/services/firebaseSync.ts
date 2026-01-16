@@ -407,6 +407,43 @@ class FirebaseSyncService {
   }
 
   /**
+   * Загрузить прогресс с сервера и получить время последнего обновления
+   */
+  async loadProgressWithTimestamp(): Promise<{ data: PlayerData; timestamp: number } | null> {
+    if (!db || !this.syncEnabled) return null;
+
+    try {
+      const deviceId = await this.getOrCreateDeviceId();
+      const docRef = doc(db, "user_progress", deviceId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const firestoreData = docSnap.data() as FirestorePlayerData;
+        // Убираем служебные поля
+        const { deviceId: _, gameVersion, lastSync, createdAt, updatedAt, ...playerData } = firestoreData;
+        
+        // Получаем timestamp из updatedAt или lastSync
+        let timestamp = Date.now();
+        if (updatedAt && updatedAt instanceof Timestamp) {
+          timestamp = updatedAt.toMillis();
+        } else if (lastSync && lastSync instanceof Timestamp) {
+          timestamp = lastSync.toMillis();
+        }
+
+        return {
+          data: playerData as PlayerData,
+          timestamp,
+        };
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Ошибка загрузки прогресса с сервера:", error);
+      return null;
+    }
+  }
+
+  /**
    * Получить статистику синхронизации
    */
   async getSyncStats(): Promise<{

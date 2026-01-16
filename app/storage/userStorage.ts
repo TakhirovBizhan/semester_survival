@@ -18,14 +18,28 @@ export interface PlayerData {
 
 /** ключ для хранения в AsyncStorage */
 const STORAGE_KEY = "playerData";
+const LAST_UPDATE_KEY = "playerData_lastUpdate"; // Время последнего обновления локальных данных
 
 /** сохранить данные игрока */
 export async function savePlayerData(data: PlayerData): Promise<void> {
   try {
     const json = JSON.stringify(data);
     await AsyncStorage.setItem(STORAGE_KEY, json);
+    // Сохраняем время последнего обновления
+    await AsyncStorage.setItem(LAST_UPDATE_KEY, Date.now().toString());
   } catch (e) {
     console.error("Ошибка сохранения данных игрока:", e);
+  }
+}
+
+/** получить время последнего обновления локальных данных */
+export async function getLastUpdateTime(): Promise<number | null> {
+  try {
+    const timestamp = await AsyncStorage.getItem(LAST_UPDATE_KEY);
+    return timestamp ? parseInt(timestamp, 10) : null;
+  } catch (e) {
+    console.error("Ошибка получения времени обновления:", e);
+    return null;
   }
 }
 
@@ -44,6 +58,7 @@ export async function loadPlayerData(): Promise<PlayerData | null> {
 export async function clearPlayerData(): Promise<void> {
   try {
     await AsyncStorage.removeItem(STORAGE_KEY);
+    await AsyncStorage.removeItem(LAST_UPDATE_KEY);
   } catch (e) {
     console.error("Ошибка удаления данных игрока:", e);
   }
