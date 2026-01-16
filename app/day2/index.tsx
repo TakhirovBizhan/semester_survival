@@ -37,9 +37,7 @@ export default function Day2() {
   const dialogs = useDialogs();
   const currentDialog = dialogs[index];
 
-  // =============================
   // МУЗЫКА
-  // =============================
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [volume, setVolume] = useState(1);
 
@@ -69,22 +67,6 @@ export default function Day2() {
 
     loadMusic();
 
-    //   return () => {
-    //     isMounted = false;
-
-    //     if (music) {
-    //       (async () => {
-    //         try {
-    //           await music.stopAsync();
-    //           await music.unloadAsync();
-    //         } catch (e) {
-    //           console.log("cleanup error:", e);
-    //         }
-    //       })();
-    //     }
-    //   };
-
-    // }, []);
     return () => {
       isMounted = false;
       if (music) {
@@ -94,27 +76,16 @@ export default function Day2() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (sound) {
-  //     sound.setVolumeAsync(volume).catch((e) =>
-  //       console.warn("Ошибка установки громкости:", e)
-  //     );
-  //   }
-  // }, [volume, sound]);
   useEffect(() => {
     if (sound) {
       sound.setVolumeAsync(volume).catch(console.warn);
     }
   }, [sound, volume]);
 
-  // =============================
   //   ФОН
-  // =============================
   const background = currentDialog?.background;
 
-  // =============================
   //   НАЖАТИЕ "ДАЛЬШЕ"
-  // =============================
   const handleNext = () => {
     if (!isTypingDone) return;
 

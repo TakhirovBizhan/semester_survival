@@ -31,7 +31,7 @@ export const IntelligenceModal = () => {
   const [resultText, setResultText] = useState<string | null>(null);
   const handleLabChoice = useHandleLabChoice();
 
-  if (modalType !== "intelligence") return null;
+  if (modalType !== "intellect") return null;
 
   const task = mathTasks[Math.floor(Math.random() * mathTasks.length)];
 
