@@ -16,7 +16,7 @@ interface SettingsModalProps {
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({ volume, setVolume }) => {
-  const { modalType, setModalType, player } = usePlayer();
+  const { modalType, setModalType, player, updatePlayer, setIndex } = usePlayer();
   const router = useRouter();
   const [syncing, setSyncing] = useState(false);
 
@@ -36,6 +36,29 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ volume, setVolume 
       await firebaseSync.processQueue();
     } catch (error) {
       console.error("Ошибка ручной синхронизации:", error);
+    } finally {
+      setSyncing(false);
+    }
+  };
+
+  const handleLoadFromServer = async () => {
+    setSyncing(true);
+    try {
+      const serverData = await firebaseSync.loadProgress();
+      
+      if (serverData) {
+        // Загружаем данные с сервера и применяем их
+        await updatePlayer(serverData);
+        setIndex(0); // Сбрасываем индекс диалога
+        alert(`Прогресс загружен с сервера! День ${serverData.currentDay}`);
+        // Закрываем модалку и возвращаемся в главное меню
+        setModalType("none");
+      } else {
+        alert("На сервере нет сохраненного прогресса");
+      }
+    } catch (error) {
+      console.error("Ошибка загрузки с сервера:", error);
+      alert("Ошибка загрузки прогресса с сервера");
     } finally {
       setSyncing(false);
     }
@@ -65,6 +88,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ volume, setVolume 
         <Button
           title={syncing ? "Синхронизация..." : "Синхронизировать сейчас"}
           onPress={handleManualSync}
+          disabled={syncing}
+        />
+        <Button
+          title={syncing ? "Загрузка..." : "Загрузить с сервера"}
+          onPress={handleLoadFromServer}
           disabled={syncing}
         />
       </View>

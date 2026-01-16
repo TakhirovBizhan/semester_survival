@@ -27,7 +27,8 @@ export const EndDayModal = () => {
       setIndex(0);
 
       // ✅ КОНЕЦ ДНЯ 5 — проверяем учебу
-      if (player.currentDay === 5) {
+      if (nextDay > 5) {
+        // Игра завершена - переходим на концовку
         if (player.academic <= 0) {
           // Плохая концовка
           router.push("/endings/badEnding");
