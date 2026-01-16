@@ -26,8 +26,8 @@ export const EndDayModal = () => {
       setModalType("none");
       setIndex(0);
 
-      // ✅ КОНЕЦ ДНЯ 5 — проверяем учебу
-      if (player.currentDay === 5) {
+      // ✅ КОНЕЦ ДНЯ 3 — проверяем учебу
+      if (player.currentDay === 3) {
         if (player.academic <= 0) {
           // Плохая концовка
           router.push("/endings/badEnding");

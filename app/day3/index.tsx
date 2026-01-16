@@ -37,6 +37,8 @@ export default function Day3() {
   const dialogs = useDialogs();
   const currentDialog = dialogs[index];
 
+  console.log("текущий день", player.currentDay);
+
   // МУЗЫКА
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [volume, setVolume] = useState(1);
