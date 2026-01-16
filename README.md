@@ -1,50 +1,58 @@
-# Welcome to your Expo app 👋!!!!!!!!!
+# 📱 Мобильная новелла (React Native / Expo)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Интерактивная сюжетная мобильная игра в жанре **визуальной новеллы**.  
+Игрок принимает решения, которые влияют на характеристики персонажа, развитие сюжета и концовку.
 
-## Get started
+Проект разработан на **React Native + Expo**, с сохранением прогресса локально и синхронизацией через Firebase.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🎮 Геймплей
 
-2. Start the app
+- Игра разбита на **дни**
+- Каждый день состоит из:
+  - диалогов
+  - выборов (бар / учёба / действия на паре)
+- Выборы влияют на характеристики игрока:
+  - 📚 `academic`
+  - 😊 `happiness`
+- Возможны **успехи и провалы**
+- Игра имеет **хорошую и плохую концовку**
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🧠 Основные механики
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- 📖 Диалоговая система с автопереходом
+- ⌨️ Эффект печатающегося текста
+- 🎵 Фоновая музыка (Expo Audio)
+- 🔀 Ветвление сюжета
+- 💾 Сохранение прогресса
+- ☁️ Синхронизация с Firebase
+- 🔁 Возможность начать новую игру
+- 📊 Страница статистики
+- 📜 Страница правил
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🧩 Архитектура
 
-When you're ready, run:
+### Контекст игрока
+Вся логика состояния игрока хранится в `PlayerContext`.
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```ts
+player: {
+  name: string
+  academic: number
+  happiness: number
+  currentDay: number
+  lastChoice: "beer" | "study" | "intellect" | "charisma" | "giveUp"
+  isLastChoiceSuccess: boolean
+  choices: {
+    beer: number
+    study: number
+    intellect: number
+    charisma: number
+    giveUp: number
+  }
+}
